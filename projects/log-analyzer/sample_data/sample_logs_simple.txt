@@ -1,0 +1,11 @@
+2025-10-16 09:23:15 ERROR Database connection failed: timeout after 30s
+2025-10-16 09:23:18 WARNING Retrying connection attempt 1 of 3
+2025-10-16 09:23:21 ERROR Database connection failed: timeout after 30s
+2025-10-16 09:23:22 INFO Application started successfully
+2025-10-16 09:24:10 DEBUG Processing user request id=12345
+2025-10-16 09:24:11 INFO User login successful: user_id=789
+2025-10-16 09:25:33 ERROR Failed to process payment: insufficient funds
+2025-10-16 09:25:34 WARNING Payment retry scheduled
+2025-10-16 09:26:45 INFO Request completed in 234ms
+2025-10-16 09:27:12 CRITICAL System out of memory: 95% usage
+2025-10-16 09:23:21 ERROR Database connection failed: timeout after 30s
