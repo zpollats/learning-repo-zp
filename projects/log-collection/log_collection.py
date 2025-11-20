@@ -1,4 +1,19 @@
-from parser import LogEntry
+class LogEntry:
+    def __init__(self, log_entry: str):
+        self._log_entry = log_entry
+        self.parse_log()
+
+    def __repr__(self):
+        return f"LogEntry(TIMESTAMP={self.timestamp}, LEVEL={self.level}, MESSAGE={self.message})"
+    
+    def parse_log(self):
+        parts = self._log_entry.split(' ')
+        if len(parts) < 4:
+            raise ValueError(f"Malformed log entry: {self._log_entry}")
+        
+        self.timestamp = parts[0] + ' ' + parts[1]
+        self.level = parts[2]
+        self.message = ' '.join(parts[3:])
 
 class LogCollection:
 	def __init__(self, logs: list[LogEntry]):
@@ -23,7 +38,7 @@ class LogCollection:
 		return self._logs[location]
 
 if __name__ == '__main__':
-	log_collector = LogCollection(['ERROR', 'WARNING', 'DEBUG'])
+	log_collector = LogCollection([LogEntry('ERROR'), LogEntry('WARNING'), LogEntry('INFO'), LogEntry('DEBUG')])
 	print(log_collector)
 	print(len(log_collector))
 	print(log_collector[-1])
