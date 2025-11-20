@@ -1,6 +1,6 @@
 import pytest
 
-from parser import LogEntry, LogParser, LogAnalyzer
+from log_analyzer import LogEntry, LogParser, LogAnalyzer
 
 @pytest.fixture
 def sample_missing_file(tmp_path):
