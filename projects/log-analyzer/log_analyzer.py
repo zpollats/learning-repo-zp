@@ -9,6 +9,9 @@ class LogEntry:
     def __repr__(self):
         return f"LogEntry(TIMESTAMP={self.timestamp}, LEVEL={self.level}, MESSAGE={self.message})"
     
+    def __eq__(self, other):
+        return self.timestamp == other.timestamp and self.level == other.level and self.message == other.message
+    
     def parse_log(self):
         parts = self._log_entry.split(' ')
         if len(parts) < 4:
