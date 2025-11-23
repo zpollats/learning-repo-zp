@@ -99,3 +99,45 @@ def test_log_parser_out_of_bounds(sample_basic_file):
 
 
 # LOG ANALYZER TESTS
+
+def test_log_analyzer_count(sample_basic_file):
+    log_parser = LogParser(sample_basic_file)
+    log_analyzer = LogAnalyzer(log_parser)
+    assert log_analyzer.log_count == 5
+
+def test_log_analyzer_levels(sample_basic_file):
+    log_parser = LogParser(sample_basic_file)
+    log_analyzer = LogAnalyzer(log_parser)
+    assert log_analyzer.log_levels == {'ERROR': 2, 'WARNING': 1, 'INFO': 1, 'DEBUG': 1}
+
+def test_log_analyzer_error_count(sample_basic_file):
+    log_parser = LogParser(sample_basic_file)
+    log_analyzer = LogAnalyzer(log_parser)
+    assert log_analyzer.error_count == 2
+
+def test_log_analyzer_warning_count(sample_basic_file):
+    log_parser = LogParser(sample_basic_file)
+    log_analyzer = LogAnalyzer(log_parser)
+    assert log_analyzer.warning_count == 1
+
+def test_log_analyzer_top_messages(sample_basic_file):
+    log_parser = LogParser(sample_basic_file)
+    log_analyzer = LogAnalyzer(log_parser)
+    top_messages = log_analyzer.top_messages(3)
+    assert len(top_messages) == 3
+    assert top_messages[0] == ('Database connection failed: timeout after 30s', 2)
+    
+def test_log_analyzer_filter_by_level(sample_basic_file):
+    log_parser = LogParser(sample_basic_file)
+    log_analyzer = LogAnalyzer(log_parser)
+    filtered_logs = log_analyzer.filter_by_level('ERROR')
+    assert len(filtered_logs) == 2
+    assert filtered_logs[0].level == 'ERROR'
+    assert filtered_logs[1].level == 'ERROR'
+
+def test_log_analyzer_empty_file(sample_empty_file):
+    log_parser = LogParser(sample_empty_file)
+    log_analyzer = LogAnalyzer(log_parser)
+    assert log_analyzer.log_count == 0
+    assert log_analyzer.error_count == 0
+    assert log_analyzer.top_messages() == []

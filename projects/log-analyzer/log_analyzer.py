@@ -1,12 +1,13 @@
 from collections import defaultdict
 import argparse
+from typing import List, Iterator, Union, overload
 
 class LogEntry:
-    def __init__(self, log_entry: str):
+    def __init__(self, log_entry: str) -> None:
         self._log_entry = log_entry
         self.parse_log()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"LogEntry(TIMESTAMP={self.timestamp}, LEVEL={self.level}, MESSAGE={self.message})"
     
     def __eq__(self, other):
@@ -22,19 +23,27 @@ class LogEntry:
         self.message = ' '.join(parts[3:])
 
 class LogParser:
-    def __init__(self, log_file_path: str):
+    def __init__(self, log_file_path: str) -> None:
         self._log_file_path = log_file_path
         self._log_entries = []
         for line in self._file_reader_generator():
             self._log_entries.append(LogEntry(line.strip()))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"LogParser({self._log_file_path})"
     
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._log_entries)
     
-    def __getitem__(self, location):
+    @overload
+    def __getitem__(self, location: int) -> LogEntry:
+        ...
+    
+    @overload
+    def __getitem__(self, location: slice) -> List[LogEntry]:
+        ...
+
+    def __getitem__(self, location: Union[int, slice]) -> Union[LogEntry, List[LogEntry]]:
         if isinstance(location, slice):
             return [self._log_entries[i] for i in range(*location.indices(len(self._log_entries)))]
 
@@ -46,7 +55,7 @@ class LogParser:
 
         return self._log_entries[location]
     
-    def _file_reader_generator(self):
+    def _file_reader_generator(self) -> Iterator[str]:
         try:
             with open(self._log_file_path, 'r') as log_file:
                 for line in log_file:
@@ -88,7 +97,7 @@ class LogAnalyzer:
         log_messages = defaultdict(int)
         for log_entry in self._log_parser:
             log_messages[log_entry.message] += 1
-        max_message = max(log_messages, key=log_messages.get)
+        max_message = max(log_messages, key = lambda msg: log_messages[msg])
         return f"Most common log message: '{max_message}' with {log_messages[max_message]} occurrences."
     
     def top_messages(self, n: int = 5):
