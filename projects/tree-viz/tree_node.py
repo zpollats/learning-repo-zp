@@ -26,4 +26,4 @@ class TreeNode:
         """Return a string representation of the node"""
         node_type = "File" if self.is_file == True else "Dir"
         child_count = len(self.children)
-        return f"TreeNode({node_type}: '{self.name}', {child_count} children)"
+        return f"TreeNode({node_type}: '{self.name}', {child_count} children, {len(self)} total nodes)"
