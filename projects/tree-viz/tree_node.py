@@ -24,4 +24,6 @@ class TreeNode:
 
     def __repr__(self) -> str:
         """Return a string representation of the node"""
-        return f"TreeNode(NAME={self.name}, IS_FILE={self.is_file}, CHILDREN={self.children})"
+        node_type = "File" if self.is_file == True else "Dir"
+        child_count = len(self.children)
+        return f"TreeNode({node_type}: '{self.name}', {child_count} children)"
