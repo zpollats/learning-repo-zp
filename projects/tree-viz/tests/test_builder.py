@@ -17,7 +17,7 @@ def test_empty_directory(tmp_path):
     """Test building a tree from a single, empty directory"""
     my_dir = tmp_path / "my_dir"
     my_dir.mkdir()
-    tree = build_tree(my_dir)
+    tree = build_tree(str(my_dir))
 
     assert tree.name == "my_dir"
     assert tree.is_file == False
@@ -95,7 +95,7 @@ def test_node_names_are_basenames(tmp_path):
     test_file.parent.mkdir(parents=True)
     test_file.touch()
 
-    tree = build_tree(test_file)
+    tree = build_tree(str(test_file))
 
     assert tree.name == "test.txt"
     assert "/" not in tree.name
