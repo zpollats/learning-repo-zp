@@ -34,4 +34,4 @@ def render_tree(node: TreeNode, prefix: str = "", is_last: bool = True) -> str:
     return render_str
 
 if __name__ == '__main__':
-    print(render_tree(build_tree('../../projects')))
+    print(render_tree(build_tree('../../projects/epl_mastermind_v2/')))
